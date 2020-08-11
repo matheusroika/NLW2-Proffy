@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {View, ScrollView, Text} from 'react-native'
-import { TextInput, BorderlessButton, RectButton } from 'react-native-gesture-handler'
+import { TextInput, BorderlessButton, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
 import {Feather} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -37,22 +37,24 @@ function TeacherList() {
         React.useCallback(() => {
           loadFavorites();
         }, [])
-      )
+    )
 
-    async function handleFiltersSubmit() {
-        loadFavorites()
-
-        const response = await api.get('classes', {
-            params: {
-               subject,
-               week_day,
-               time 
-            }
-        })
-        setTeachers(response.data)
-
-        setIsFilterVisible(false)
-    }
+    useEffect(() => {
+        async function searchTeachers() {
+            loadFavorites()
+    
+            const response = await api.get('classes', {
+                params: {
+                   subject,
+                   week_day,
+                   time 
+                }
+            })
+            setTeachers(response.data)
+        }
+        
+        searchTeachers()
+    }, [subject, week_day, time])
 
     function handleToggleFiltersVisible() {
         setIsFilterVisible(!isFiltersVisible)
@@ -60,10 +62,14 @@ function TeacherList() {
 
     return (
         <View style={styles.container}>
-            <PageHeader title="Proffys disponíveis" headerRight={
-            <BorderlessButton onPress={handleToggleFiltersVisible}>
-                <Feather name="filter" size={20} color="#FFF" />
-            </BorderlessButton>}>
+            <PageHeader title="Proffys disponíveis">
+                <View style={styles.filterButtonContainer}>
+                    <TouchableOpacity style={styles.filterButton} onPress={handleToggleFiltersVisible} activeOpacity={0.7}>
+                        <Feather name="filter" size={20} color="#04D361" />
+                        <Text style={styles.filterButtonText}>Filtrar por dia, hora e matéria</Text>
+                        {isFiltersVisible ? <Feather name="chevron-up" size={20} color="#A380F6" /> : <Feather name="chevron-down" size={20} color="#A380F6" />}
+                    </TouchableOpacity>
+                </View>
                 {isFiltersVisible && (
                     <View style={styles.searchForm}>
                         <Text style={styles.label}>Matéria</Text>
@@ -80,9 +86,6 @@ function TeacherList() {
                                 <TextInput style={styles.input} value={time} onChangeText={text => setTime(text)} placeholder="Qual horário?" placeholderTextColor='#c1bccc'></TextInput>
                             </View>
                         </View>
-                        <RectButton onPress={handleFiltersSubmit} style={styles.submitButton}>
-                            <Text style={styles.submitButtonText}>Filtrar</Text>
-                         </RectButton>
                     </View>
                 )}
             </PageHeader>

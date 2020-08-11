@@ -6,6 +6,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f7',
     },
 
+    filterButtonContainer: {
+        borderBottomColor: 'rgba(152, 113, 245, 0.5)',
+        borderBottomWidth: 1,
+        marginTop: -20,
+        marginBottom: 32,
+    },
+
+    filterButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 20,
+    },
+
+    filterButtonText: {
+        color: "#D4C2FF",
+        fontFamily: "Archivo_400Regular",
+        fontSize: 16,
+    },
+
     teacherList: {
         marginTop: -40,
     },
@@ -36,21 +56,6 @@ const styles = StyleSheet.create({
 
     inputBlock: {
         width: '48%'
-    },
-
-    submitButton: {
-        backgroundColor: "#04d361",
-        height: 56,
-        borderRadius: 8,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-
-    submitButtonText: {
-        color: "#FFF",
-        fontFamily: "Archivo_700Bold",
-        fontSize: 16,
     },
 })
 
