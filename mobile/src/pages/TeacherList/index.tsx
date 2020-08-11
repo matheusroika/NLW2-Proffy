@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {View, ScrollView, Text} from 'react-native'
-import { TextInput, BorderlessButton, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import {Feather} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-community/async-storage'
 
